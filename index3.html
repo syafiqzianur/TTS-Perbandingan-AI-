@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Interaktif IPB University</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            background-color: #0c4da2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            border: 5px solid white;
+        }
+
+        .logo img {
+            width: 80%;
+            height: auto;
+        }
+
+        h1 {
+            color: #0c4da2;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h2 {
+            color: #0c4da2;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 15px;
+        }
+
+        .menu-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #0c4da2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-btn:hover {
+            background-color: #08367c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-btn.active {
+            background-color: #08367c;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 500px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content h2 {
+            color: #0c4da2;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #0c4da2;
+            padding-bottom: 10px;
+        }
+
+        .biodata-item {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .biodata-label {
+            font-weight: bold;
+            width: 150px;
+            color: #0c4da2;
+        }
+
+        .biodata-value {
+            flex: 1;
+        }
+
+        .peminatan-list, .hobi-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .peminatan-item, .hobi-item {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #0c4da2;
+            transition: all 0.3s ease;
+        }
+
+        .peminatan-item:hover, .hobi-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .peminatan-item h3, .hobi-item h3 {
+            color: #0c4da2;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">
+                    <!-- Logo IPB University -->
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#0c4da2" />
+                        <text x="50" y="55" text-anchor="middle" fill="white" font-size="24" font-weight="bold">IPB</text>
+                    </svg>
+                </div>
+            </div>
+            <h1>Dashboard Interaktif IPB University</h1>
+            <p>Selamat datang di dashboard informasi mahasiswa</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="sidebar">
+                <h2>Menu</h2>
+                <ul class="menu">
+                    <li class="menu-item">
+                        <button class="menu-btn active" data-target="biodata">
+                            <i class="fas fa-user"></i> Biodata Singkat
+                        </button>
+                    </li>
+                    <li class="menu-item">
+                        <button class="menu-btn" data-target="peminatan">
+                            <i class="fas fa-graduation-cap"></i> Peminatan
+                        </button>
+                    </li>
+                    <li class="menu-item">
+                        <button class="menu-btn" data-target="hobi">
+                            <i class="fas fa-heart"></i> Hobi
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <div id="biodata" class="content-section active">
+                    <h2>Biodata Singkat</h2>
+                    <div class="biodata-item">
+                        <div class="biodata-label">Nama</div>
+                        <div class="biodata-value">Syafiq Ziyanur Rahman</div>
+                    </div>
+                    <div class="biodata-item">
+                        <div class="biodata-label">NIM</div>
+                        <div class="biodata-value">F3401241092</div>
+                    </div>
+                    <div class="biodata-item">
+                        <div class="biodata-label">Fakultas</div>FT IPB</div>
+                    </div>
+                        <div class="biodata-value">
+                    <div class="biodata-item">
+                        <div class="biodata-label">Program Studi</div>
+                        <div class="biodata-value">Ilmu Komputerisasi pertanian dan industri pangan</div>
+                    </div>
+                    <div class="biodata-item">
+                        <div class="biodata-label">Angkatan</div>
+                        <div class="biodata-value">2033</div>
+                    </div>
+                    <div class="biodata-item">
+                        <div class="biodata-label">Email</div>
+                        <div class="biodata-value">syafiqzianur1909@gmail.com</div>
+                    </div>
+                </div>
+
+                <div id="peminatan" class="content-section">
+                    <h2>Peminatan</h2>
+                    <ul class="peminatan-list">
+                        <li class="peminatan-item">
+                            <h3>Kecerdasan Buatan</h3>
+                            <p>Mempelajari algoritma dan teknik untuk membuat sistem yang dapat berpikir seperti manusia.</p>
+                        </li>
+                        <li class="peminatan-item">
+                            <h3>Data Science</h3>
+                            <p>Fokus pada analisis data besar untuk mendapatkan wawasan dan pola yang bermanfaat.</p>
+                        </li>
+                        <li class="peminatan-item">
+                            <h3>Keamanan Siber</h3>
+                            <p>Mempelajari teknik untuk melindungi sistem informasi dari ancaman dan serangan digital.</p>
+                        </li>
+                        <li class="peminatan-item">
+                            <h3>Pengembangan Web</h3>
+                            <p>Membuat aplikasi web yang interaktif dan responsif dengan teknologi terkini.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="hobi" class="content-section">
+                    <h2>Hobi</h2>
+                    <ul class="hobi-list">
+                        <li class="hobi-item">
+                            <h3>Membaca</h3>
+                            <p>Menikmati buku fiksi ilmiah dan teknologi untuk memperluas wawasan.</p>
+                        </li>
+                        <li class="hobi-item">
+                            <h3>Berkebun</h3>
+                            <p>Menanam tanaman hias dan sayuran organik di rumah.</p>
+                        </li>
+                        <li class="hobi-item">
+                            <h3>Fotografi</h3>
+                            <p>Mengabadikan momen dan pemandangan alam dengan kamera DSLR.</p>
+                        </li>
+                        <li class="hobi-item">
+                            <h3>Olahraga</h3>
+                            <p>Bersepeda dan berlari untuk menjaga kesehatan dan kebugaran tubuh.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Dashboard Interaktif IPB University. Semua hak cipta dilindungi.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButtons = document.querySelectorAll('.menu-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // Fungsi untuk mengubah konten yang ditampilkan
+            function showContent(targetId) {
+                // Sembunyikan semua konten
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Tampilkan konten yang dipilih
+                document.getElementById(targetId).classList.add('active');
+                
+                // Update tampilan tombol aktif
+                menuButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Temukan tombol yang sesuai dengan targetId
+                const activeButton = document.querySelector(`.menu-btn[data-target="${targetId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            }
+            
+            // Tambahkan event listener untuk setiap tombol menu
+            menuButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    showContent(targetId);
+                });
+            });
+            
+            // Tampilkan konten default (biodata)
+            showContent('biodata');
+        });
+    </script>
+</body>
+</html>
